@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PassShield Mobile</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --primary: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #111;
+        }
+        .section {
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:active {
+            opacity: 0.9;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            word-break: break-word;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🛡️ PassShield</h1>
+
+    <!-- PASSWORD VALIDATOR -->
+    <div class="section">
+        <h2>Password Validator</h2>
+        <input type="password" id="passwordInput" placeholder="Enter password to test...">
+        <button onclick="checkPassword()">Verify Strength</button>
+        <div id="pwdResult" class="result-box"></div>
+    </div>
+</div>
+
+<script>
+    function checkPassword() {
+        const password = document.getElementById('passwordInput').value;
+        const resultDiv = document.getElementById('pwdResult');
+        resultDiv.style.display = 'block';
+
+        if (password.length === 0) {
+            resultDiv.innerHTML = "❌ Error: Please enter a password first.";
+            resultDiv.style.backgroundColor = "#fde8e8";
+            resultDiv.style.color = "var(--danger)";
+            return;
+        }
+        if (password.length < 8) {
+            resultDiv.innerHTML = "❌ Weak: Must be at least 8 characters long.";
+            resultDiv.style.backgroundColor = "#fde8e8";
+            resultDiv.style.color = "var(--danger)";
+            return;
+        }
+        if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+            resultDiv.innerHTML = "❌ Weak: Must include both upper and lowercase letters.";
+            resultDiv.style.backgroundColor = "#fde8e8";
+            resultDiv.style.color = "var(--danger)";
+            return;
+        }
+        if (!/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            resultDiv.innerHTML = "❌ Weak: Must include at least one number and one symbol.";
+            resultDiv.style.backgroundColor = "#fde8e8";
+            resultDiv.style.color = "var(--danger)";
+            return;
+        }
+
+        resultDiv.innerHTML = "💪 Strong: Password meets safety criteria!";
+        resultDiv.style.backgroundColor = "#eafaf1";
+        resultDiv.style.color = "var(--success)";
+    }
+</script>
+
+</body>
+</html>
